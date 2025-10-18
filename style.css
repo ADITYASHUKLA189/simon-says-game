@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0b0c10;
+    overflow: hidden;
+}
+
+/* The main container controls the size transition */
+.login-container {
+    position: relative;
+    width: 430px;
+    height: 150px; /* Initial smaller height for collapsed state */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+/* Hover effect: show the full form */
+.login-container:hover {
+    height: 500px; /* Expand to show the full form */
+}
+
+/* The main outer box */
+.box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #23232b;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+    overflow: hidden;
+    box-shadow: 0 15px 50px #000;
+}
+
+/* Rotating border effect (::before) */
+.box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 500px;
+    background: linear-gradient(0deg, transparent, #ff007f, #00d9ff, #ff007f);
+    transform-origin: bottom right;
+    animation: rotate 1.5s linear infinite; /* Fast speed */
+    animation-delay: -1s;
+}
+
+/* Inner frame/dark background (::after) */
+.box::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: #2d2d39;
+    border-radius: 15px;
+    border: 8px solid #25252b;
+    z-index: 1;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Content wrapper */
+.form-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    width: 100%;
+    /* Initially hide the form content */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* When not hovered, the form content is hidden */
+.login-container:not(:hover) .form-content {
+    display: none;
+}
+
+/* --- NEW ELEMENT FOR THE RECESSED BUTTON LOOK --- */
+.login-button-face {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11; /* Above ::after */
+    height: 60px;
+    width: 70%;
+    background: #25252b; /* Darker than the background to look recessed */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Add a subtle inset shadow for the recessed look */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease-in-out;
+}
+/* Hide this recessed button on hover */
+.login-container:hover .login-button-face {
+    opacity: 0;
+    visibility: hidden;
+}
+/* --- END NEW ELEMENT --- */
+
+
+/* Header styles */
+.login-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    /* Transition properties */
+    transition: all 0.4s ease-in-out;
+}
+
+/* State when collapsed (not hovered) */
+.login-container:not(:hover) .login-header {
+    /* Place the header inside the new recessed button face */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+    /* Set collapsed styling */
+    font-size: 1.2em;
+    gap: 5px;
+    padding: 0; /* Remove padding */
+    width: 100%;
+}
+.login-container:not(:hover) .login-header .fa-volume-up,
+.login-container:not(:hover) .login-header .fa-heart {
+    font-size: 0.6em;
+}
+
+
+/* State when expanded (hovered) */
+.login-container:hover .form-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+    display: flex;
+}
+.login-container:hover .login-header {
+    /* Reset to expanded styling */
+    position: relative;
+    transform: none;
+    font-size: 1.5em;
+    margin-bottom: -10px;
+    gap: 10px;
+}
+.login-container:hover .login-header .fa-volume-up,
+.login-container:hover .login-header .fa-heart {
+    font-size: 0.8em;
+}
+
+
+
+
+/* --- Remaining form styles --- */
+
+.login-header h2 {
+    margin: 0;
+}
+
+.login-header .fa-volume-up,
+.login-header .fa-heart {
+    color: #ff007f;
+    transition: font-size 0.4s ease;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background: transparent;
+    border: 1px solid #4a4a58;
+    border-radius: 8px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #00d9ff;
+}
+
+.input-group input::placeholder {
+    color: #888;
+}
+
+.sign-in-btn {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #00d9ff;
+    border: none;
+    border-radius: 8px;
+    color: #0b0c10;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.sign-in-btn:hover {
+    background-color: #00b8e6;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 25px;
+    font-size: 0.9em;
+}
+
+.form-footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.form-footer a:hover {
+    color: #00d9ff;
+}
+
+.form-footer .sign-up {
+    color: #ff007f;
+    font-weight: 600;
+}
