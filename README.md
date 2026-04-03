@@ -53,4 +53,4 @@ simon-says/
 ## 🙌 Credits
 
 Inspired by the classic **Simon Game** concept.  
-Developed with ❤️ using vanilla web technologies.
+
